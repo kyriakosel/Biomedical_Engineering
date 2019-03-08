@@ -1,0 +1,61 @@
+Voltage meter
+void setup() {
+  Serial.begin(9600);          // serial communication baud rate
+}
+void loop() {                 // Run unlimited loop
+  int input = analogRead(A0); // read analogue input and convert to digital
+  float digitalV = input * (5.0 / 1023.0); // convert analogue signal to voltage
+  Serial.println(digitalV);// print value
+}
+Time Counter for BPM
+int BPM =0 ;
+unsigned long peak = 0;
+int average_counter = 0;
+int difference = 0;
+int average_t = 0;
+
+void setup() {
+  
+  Serial.begin(9600);
+  
+for (i=0; i<10 ;i++)
+peak[i] =0;
+}
+
+void loop() {
+  peak[i] += millis();
+if (600 < peak[i] < 1200) 
+{
+  average_counter ++ ;
+  difference = peak [i+1] - peak[i];
+  average_t = (difference / average_counter);
+  BPM = 60000/average_t;
+}
+}
+Noise Reduction
+int inputPin = A0; // Define input port (can be from 0 to 5)
+const int i = 10;
+int sum = 0;           //Declare Variables
+int Index = 0; 
+int average = 0;
+int value[i];               
+void setup()
+{
+  Serial.begin(9600); // serial Comm
+  for (int x = 0; 
+        x < i; 
+        x++) // make a for loop from x = 0 to i = 10 (to count 10 times)
+              value[x] = 0;
+}
+void loop() {
+  sum = sum - value[Index];  //reset the last value
+  value[Index] = analogRead(inputPin); // Read the analogue value
+  sum = sum + value[Index]; // Sum with total
+  Index = Index + 1;// Jump to next index number
+
+  if (Index >= i)
+    Index = 0;
+  average = sum / i; // find average of 10 values
+  Serial.println(average); // serial print into the PC
+  
+}
